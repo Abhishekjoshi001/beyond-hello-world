@@ -37,3 +37,38 @@ void fun(const char* message){
 - There are two files, `main.cpp` and `fun.cpp`. To use the function from `fun.cpp`, you need to declare the function in `main.cpp`. This is called a **declaration**.
 - **Declaration**: A statement that indicates a function, symbol, or variable exists.
 - The `main.cpp` and `fun.cpp` files are compiled into `main.obj` and `fun.obj` respectively. The linker then combines these multiple objects into a single executable(`.exe`).
+
+# How the compiler actually works
+## Preprocessing
+- The first step of compilation is to convert the .cpp file to a preprocessed file with the .i extension. All preprocessing directives such as #include, #define, #if, #ifndef, etc., are expanded in the .i file.
+- Next, the preprocessed .i file is translated to a human-readable assembly file (commonly .asm; some toolchains may use other extensions).
+- The assembler converts this assembly file into an object file (.obj or .o, depending on the platform).
+- These object files are then combined by the linker to produce the final executable.
+- Example to illustrate the compilation stages
+
+##### End_brace.h
+```h
+}
+```
+
+##### math.cpp
+```cpp
+int add(int a, int b){
+    int result = a + b;
+#include "End_brace.h"
+```
+#### math.i
+```cpp
+int add(int a, int b){
+    int result = a + b;
+}
+```
+#### math.asm
+```asm
+; Assembly code generated from math.i
+; Actual output depends on the compiler and target architecture.
+```
+- The compiler converts the preprocessed `.i` file to an assembly `.asm` file.
+- The assembler converts `.asm` into an object file `.obj` (object contents not shown).
+- So as we can see above, the `.i` file is the preprocessed source before assembly and `.asm` is the assembly version before object file generation.
+- And this `math.asm` is converted to `math.obj`

@@ -8,9 +8,9 @@ This repository documents my progress from writing simple programs to building p
 
 - Master Data Structures & Algorithms
 - Become proficient in Modern C++
-- Learn Linux and Operating Systems
-- Build real-world full-stack and backend projects
-- Strengthen problem-solving skills
-- Prepare for software engineering roles at top product companies
+- Learn Linux, Operating Systems, and System Programming
+- Build real-world systems and software engineering projects
+- Develop expertise in Embedded Systems, Embedded Linux, RTOS, and Drivers
+- Strengthen problem-solving and software engineering skills
 
 > Every commit represents one step beyond "Hello, World!"

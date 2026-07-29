@@ -38,8 +38,7 @@ void fun(const char* message){
 - **Declaration**: A statement that indicates a function, symbol, or variable exists.
 - The `main.cpp` and `fun.cpp` files are compiled into `main.obj` and `fun.obj` respectively. The linker then combines these multiple objects into a single executable(`.exe`).
 
-# How the compiler actually works
-## Preprocessing
+## How the compiler actually works
 - The first step of compilation is to convert the .cpp file to a preprocessed file with the .i extension. All preprocessing directives such as #include, #define, #if, #ifndef, etc., are expanded in the .i file.
 - Next, the preprocessed .i file is translated to a human-readable assembly file (commonly .asm; some toolchains may use other extensions).
 - The assembler converts this assembly file into an object file (.obj or .o, depending on the platform).
@@ -57,13 +56,13 @@ int add(int a, int b){
     int result = a + b;
 #include "End_brace.h"
 ```
-#### math.i
+##### math.i
 ```cpp
 int add(int a, int b){
     int result = a + b;
 }
 ```
-#### math.asm
+##### math.asm
 ```asm
 ; Assembly code generated from math.i
 ; Actual output depends on the compiler and target architecture.
@@ -72,3 +71,34 @@ int add(int a, int b){
 - The assembler converts `.asm` into an object file `.obj` (object contents not shown).
 - So as we can see above, the `.i` file is the preprocessed source before assembly and `.asm` is the assembly version before object file generation.
 - And this `math.asm` is converted to `math.obj`
+## Linker
+- The linker is responsible for stitching together multiple object files produced throughout the project into a single executable.
+- The linker resolves symbols such as function calls and global variables across object files.
+- A starting point is required for the linked program, and that starting point is usually `int main()`.
+- If there is no `int main()`, the compiler may still compile individual `.cpp` files to object files, but the linker will fail because it cannot find the program entry point.
+- The most common linker error is `unresolved external symbol`.
+- This error occurs when a function or variable is declared or used, but its definition is not found in any of the linked object files or libraries.
+- Example:
+main.cpp
+```c++
+#include <iostream>
+
+void Log(const char* msg);
+
+int main() {
+    Log("Hello");
+}
+```
+log.cpp
+```c++
+#include <iostream>
+
+void Logr(const char* msg) {
+    std::cout << msg << std::endl;
+}
+```
+- Even though `main.cpp` declares and uses `Log`, `log.cpp` defines `Logr` instead. This name mismatch causes the linker to fail with an `unresolved external symbol` for `Log`.
+- If `log.cpp` is not compiled and linked, or if its function name doesn't match the declaration in `main.cpp`, the linker reports an `unresolved external symbol`.
+- If the declaration in `main.cpp` does not match the actual definition in `fun.cpp` (for example, different function name, parameter types, or return type), the compiler may still compile each file, but the linker will fail because it cannot find a matching definition for the declared symbol.
+- The declaration `void Log(const char* msg);` in `main.cpp` is not enough by itself; the definition must be available to the linker and must have the same name and signature.
+- The linker also combines startup code and libraries with the object files to produce the final executable.

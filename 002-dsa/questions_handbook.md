@@ -8,7 +8,7 @@
 
 - [x] Two Sum
 - [x] Best Time to Buy and Sell Stock
-- [ ] Majority Element
+- [x] Majority Element
 
 ---
 

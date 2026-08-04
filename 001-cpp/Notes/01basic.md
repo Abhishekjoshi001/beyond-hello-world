@@ -1,7 +1,7 @@
 # C++
 ## What is C++?
 - C++ is a general-purpose, cross-platform programming language developed by Bjarne Stroustrup as an extension of the C programming language.
-
+---
 ## How C++ Works?
 ```c++
 #include<iostream>
@@ -37,7 +37,7 @@ void fun(const char* message){
 - There are two files, `main.cpp` and `fun.cpp`. To use the function from `fun.cpp`, you need to declare the function in `main.cpp`. This is called a **declaration**.
 - **Declaration**: A statement that indicates a function, symbol, or variable exists.
 - The `main.cpp` and `fun.cpp` files are compiled into `main.obj` and `fun.obj` respectively. The linker then combines these multiple objects into a single executable(`.exe`).
-
+---
 ## How the compiler actually works
 - The first step of compilation is to convert the .cpp file to a preprocessed file with the .i extension. All preprocessing directives such as #include, #define, #if, #ifndef, etc., are expanded in the .i file.
 - Next, the preprocessed .i file is translated to a human-readable assembly file (commonly .asm; some toolchains may use other extensions).
@@ -71,6 +71,7 @@ int add(int a, int b){
 - The assembler converts `.asm` into an object file `.obj` (object contents not shown).
 - So as we can see above, the `.i` file is the preprocessed source before assembly and `.asm` is the assembly version before object file generation.
 - And this `math.asm` is converted to `math.obj`
+---
 ## Linker
 - The linker is responsible for stitching together multiple object files produced throughout the project into a single executable.
 - The linker resolves symbols such as function calls and global variables across object files.
@@ -102,3 +103,16 @@ void Logr(const char* msg) {
 - If the declaration in `main.cpp` does not match the actual definition in `fun.cpp` (for example, different function name, parameter types, or return type), the compiler may still compile each file, but the linker will fail because it cannot find a matching definition for the declared symbol.
 - The declaration `void Log(const char* msg);` in `main.cpp` is not enough by itself; the definition must be available to the linker and must have the same name and signature.
 - The linker also combines startup code and libraries with the object files to produce the final executable.
+---
+## Header Files
+- Header files are used to store declarations such as function declarations, variable declarations, and macro declarations.
+- `#pragma once` prevents a header file from being included multiple times in a single translation unit.
+- The traditional way to avoid multiple inclusions is with include guards:
+```cpp
+#ifndef HEADER_NAME_H
+#define HEADER_NAME_H
+<body>
+#endif
+```
+- `#pragma once` is the newer and widely accepted approach.
+- `#include <iostream>` is commonly used in C++, while `#include <stdio.h>` is used in C. The `.h` extension is common in C, but in C++ it is not required for standard headers; this is simply a convention established by the language's evolution.
